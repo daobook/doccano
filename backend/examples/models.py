@@ -34,10 +34,7 @@ class Example(models.Model):
 
     @property
     def data(self):
-        if self.project.is_text_project:
-            return self.text
-        else:
-            return str(self.filename)
+        return self.text if self.project.is_text_project else str(self.filename)
 
     class Meta:
         ordering = ['created_at']

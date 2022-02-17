@@ -43,8 +43,7 @@ class ExampleList(generics.ListCreateAPIView):
 
     def delete(self, request, *args, **kwargs):
         queryset = self.project.examples
-        delete_ids = request.data['ids']
-        if delete_ids:
+        if delete_ids := request.data['ids']:
             queryset.filter(pk__in=delete_ids).delete()
         else:
             queryset.all().delete()

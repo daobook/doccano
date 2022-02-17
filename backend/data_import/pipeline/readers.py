@@ -121,5 +121,4 @@ class Reader(BaseReader):
     @property
     def errors(self) -> List[FileParseException]:
         """Aggregates parser and builder errors."""
-        errors = self.parser.errors + self._errors
-        return errors
+        return self.parser.errors + self._errors

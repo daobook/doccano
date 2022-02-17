@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 Any setting that is configured via an environment variable may
 also be set in a `.env` file in the project base directory.
 """
+
 import importlib.util
 import sys
 from os import path
@@ -167,9 +168,7 @@ if GITHUB_ADMIN_ORG_NAME and GITHUB_ADMIN_TEAM_NAME:
 SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_KEY = env('OAUTH_AAD_KEY', None)
 SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_SECRET = env('OAUTH_AAD_SECRET', None)
 SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_TENANT_ID = env('OAUTH_AAD_TENANT', None)
-AZUREAD_ADMIN_GROUP_ID = env('AZUREAD_ADMIN_GROUP_ID', None)
-
-if AZUREAD_ADMIN_GROUP_ID:
+if AZUREAD_ADMIN_GROUP_ID := env('AZUREAD_ADMIN_GROUP_ID', None):
     SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_RESOURCE = 'https://graph.microsoft.com/'
     SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_SCOPE = ['Directory.Read.All']
 
@@ -325,9 +324,10 @@ GOOGLE_TRACKING_ID = env('GOOGLE_TRACKING_ID', 'UA-125643874-2').strip()
 
 AZURE_APPINSIGHTS_IKEY = env('AZURE_APPINSIGHTS_IKEY', None)
 APPLICATION_INSIGHTS = {
-    'ikey': AZURE_APPINSIGHTS_IKEY if AZURE_APPINSIGHTS_IKEY else None,
+    'ikey': AZURE_APPINSIGHTS_IKEY or None,
     'endpoint': env('AZURE_APPINSIGHTS_ENDPOINT', None),
 }
+
 
 # necessary for email verification of new accounts
 EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', False)

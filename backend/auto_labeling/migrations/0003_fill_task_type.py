@@ -7,14 +7,19 @@ def fill_task_type(apps, schema_editor):
     AutoLabelingConfig = apps.get_model('auto_labeling', 'AutoLabelingConfig')
     for config in AutoLabelingConfig.objects.all():
         project = config.project
-        if project.project_type in [DOCUMENT_CLASSIFICATION, IMAGE_CLASSIFICATION]:
+        if project.project_type in [
+            DOCUMENT_CLASSIFICATION,
+            IMAGE_CLASSIFICATION,
+        ] or project.project_type not in [
+            SEQ2SEQ,
+            SPEECH2TEXT,
+            SEQUENCE_LABELING,
+        ]:
             config.task_type = 'Category'
         elif project.project_type in [SEQ2SEQ, SPEECH2TEXT]:
             config.task_type = 'Text'
-        elif project.project_type in [SEQUENCE_LABELING]:
-            config.task_type = 'Span'
         else:
-            config.task_type = 'Category'
+            config.task_type = 'Span'
         config.save()
 
 

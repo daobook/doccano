@@ -10,5 +10,4 @@ class ExportApplicationService:
 
     def export(self, export_approved=False) -> str:
         records = self.repository.list(export_approved=export_approved)
-        filepath = self.writer.write(records)
-        return filepath
+        return self.writer.write(records)

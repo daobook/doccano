@@ -27,10 +27,9 @@ class MemberManager(Manager):
         )
         if queryset.count() > 1:
             return True
-        else:
-            admin = queryset.first()
-            # we can change the role except for the only admin.
-            return admin.id != member_id or new_role == settings.ROLE_PROJECT_ADMIN
+        admin = queryset.first()
+        # we can change the role except for the only admin.
+        return admin.id != member_id or new_role == settings.ROLE_PROJECT_ADMIN
 
     def has_role(self, project_id: int, user: User, role_name: str):
         return self.filter(project=project_id, user=user, role__name=role_name).exists()

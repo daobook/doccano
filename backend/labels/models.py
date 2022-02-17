@@ -64,9 +64,8 @@ class Span(Label):
         if is_collaborative:
             if overlapping_span.exists():
                 raise ValidationError('This overlapping is not allowed in this project.')
-        else:
-            if overlapping_span.filter(user=self.user).exists():
-                raise ValidationError('This overlapping is not allowed in this project.')
+        elif overlapping_span.filter(user=self.user).exists():
+            raise ValidationError('This overlapping is not allowed in this project.')
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):

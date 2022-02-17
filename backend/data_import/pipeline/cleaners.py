@@ -48,10 +48,7 @@ class CategoryCleaner(Cleaner):
         self.exclusive = getattr(project, 'single_class_classification', False)
 
     def clean(self, labels: List[CategoryLabel]) -> List[CategoryLabel]:
-        if self.exclusive:
-            return labels[:1]
-        else:
-            return labels
+        return labels[:1] if self.exclusive else labels
 
     @property
     def message(self) -> str:

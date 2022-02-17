@@ -86,7 +86,7 @@ class SpanLabel(Label):
 
     @classmethod
     def parse(cls, obj: Any):
-        if isinstance(obj, list) or isinstance(obj, tuple):
+        if isinstance(obj, (list, tuple)):
             columns = ['start_offset', 'end_offset', 'label']
             obj = zip(columns, obj)
             return cls.parse_obj(obj)

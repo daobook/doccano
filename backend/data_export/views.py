@@ -28,8 +28,7 @@ class DatasetExportAPI(APIView):
     def get(self, request, *args, **kwargs):
         task_id = request.GET['taskId']
         task = AsyncResult(task_id)
-        ready = task.ready()
-        if ready:
+        if ready := task.ready():
             filename = task.result
             return FileResponse(open(filename, mode='rb'), as_attachment=True)
         return Response({'status': 'Not ready'})

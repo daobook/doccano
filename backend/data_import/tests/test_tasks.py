@@ -34,7 +34,7 @@ class TestImportClassificationData(TestImportData):
         self.assertEqual(Example.objects.count(), len(dataset))
         for text, expected_labels in dataset:
             example = Example.objects.get(text=text)
-            labels = set(cat.label.text for cat in example.categories.all())
+            labels = {cat.label.text for cat in example.categories.all()}
             self.assertEqual(labels, set(expected_labels))
 
     def assert_parse_error(self, response):
@@ -208,7 +208,7 @@ class TestImportSeq2seqData(TestImportData):
         self.assertEqual(Example.objects.count(), len(dataset))
         for text, expected_labels in dataset:
             example = Example.objects.get(text=text)
-            labels = set(text_label.text for text_label in example.texts.all())
+            labels = {text_label.text for text_label in example.texts.all()}
             self.assertEqual(labels, set(expected_labels))
 
     def test_jsonl(self):
@@ -249,7 +249,7 @@ class TextImportIntentDetectionAndSlotFillingData(TestImportData):
         self.assertEqual(Example.objects.count(), len(dataset))
         for text, expected_labels in dataset:
             example = Example.objects.get(text=text)
-            cats = set(cat.label.text for cat in example.categories.all())
+            cats = {cat.label.text for cat in example.categories.all()}
             entities = [(span.start_offset, span.end_offset, span.label.text) for span in example.spans.all()]
             self.assertEqual(cats, set(expected_labels['cats']))
             self.assertEqual(entities, expected_labels['entities'])

@@ -17,10 +17,9 @@ class CommentList(generics.ListCreateAPIView):
     search_fields = ('text',)
 
     def get_queryset(self):
-        queryset = Comment.objects.filter(
+        return Comment.objects.filter(
             example__project_id=self.kwargs['project_id']
         )
-        return queryset
 
     def perform_create(self, serializer):
         serializer.save(

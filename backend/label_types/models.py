@@ -55,7 +55,7 @@ class LabelType(models.Model):
             raise ValidationError(message)
 
         # each shortcut (prefix key + suffix key) can only be assigned to one label
-        if self.suffix_key or self.prefix_key:
+        if self.suffix_key:
             other_labels = self.labels.exclude(id=self.id)
             if other_labels.filter(suffix_key=self.suffix_key, prefix_key=self.prefix_key).exists():
                 message = 'A label with the shortcut already exists in the project.'

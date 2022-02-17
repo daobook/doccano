@@ -11,10 +11,7 @@ def get_data_class(project_type: str):
         SEQ2SEQ,
         INTENT_DETECTION_AND_SLOT_FILLING
     ]
-    if project_type in text_projects:
-        return data.TextData
-    else:
-        return data.FileData
+    return data.TextData if project_type in text_projects else data.FileData
 
 
 def create_parser(file_format: str, **kwargs):
@@ -85,8 +82,7 @@ def create_bulder(project, **kwargs):
                 value_class=get_label_class(project.project_type)
             )
         ]
-    builder = builders.ColumnBuilder(
+    return builders.ColumnBuilder(
         data_column=data_column,
         label_columns=label_columns
     )
-    return builder

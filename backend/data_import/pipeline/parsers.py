@@ -46,10 +46,7 @@ def detect_encoding(filename: str, buffer_size: int = io.DEFAULT_BUFFER_SIZE) ->
                 break
             if detector.done:
                 break
-        if detector.done:
-            return detector.result['encoding']
-        else:
-            return 'utf-8'
+        return detector.result['encoding'] if detector.done else 'utf-8'
 
 
 def decide_encoding(filename: str, encoding: str) -> str:
@@ -291,10 +288,7 @@ class CoNLLParser(Parser):
             'BILOU': BILOU
         }
         self._errors = []
-        if scheme in mapping:
-            self.scheme = mapping[scheme]
-        else:
-            self.scheme = None
+        self.scheme = mapping.get(scheme)
 
     @property
     def errors(self) -> List[FileParseException]:
@@ -310,8 +304,7 @@ class CoNLLParser(Parser):
         reader = LineReader(filename, self.encoding)
         words, tags = [], []
         for line_num, line in enumerate(reader, start=1):
-            line = line.rstrip()
-            if line:
+            if line := line.rstrip():
                 tokens = line.split('\t')
                 if len(tokens) != 2:
                     message = 'A line must be separated by tab and has two columns.'

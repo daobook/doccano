@@ -17,8 +17,7 @@ def create_repository(project) -> repositories.BaseRepository:
     }
     if project.project_type not in mapping:
         ValueError(f'Invalid project type: {project.project_type}')
-    repository = mapping.get(project.project_type)(project)
-    return repository
+    return mapping.get(project.project_type)(project)
 
 
 def create_writer(file_format: str) -> Type[writers.BaseWriter]:

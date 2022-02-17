@@ -8,10 +8,7 @@ class AutoLabelingConfigAdmin(admin.ModelAdmin):
     ordering = ('project',)
 
     def get_readonly_fields(self, request, obj=None):
-        if obj:
-            return ["model_name"]
-        else:
-            return []
+        return ["model_name"] if obj else []
 
 
 admin.site.register(AutoLabelingConfig, AutoLabelingConfigAdmin)

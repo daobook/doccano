@@ -16,5 +16,4 @@ def export_dataset(project_id, file_format: str, export_approved=False):
     repository = create_repository(project)
     writer = create_writer(file_format)(settings.MEDIA_ROOT)
     service = ExportApplicationService(repository, writer)
-    filepath = service.export(export_approved)
-    return filepath
+    return service.export(export_approved)

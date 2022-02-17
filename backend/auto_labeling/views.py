@@ -96,9 +96,8 @@ class RestAPIRequestTesting(APIView):
         text = self.request.data['text']
         if self.project.is_text_project:
             return text
-        else:
-            tu = TemporaryUpload.objects.get(upload_id=text)
-            return tu.get_file_path()
+        tu = TemporaryUpload.objects.get(upload_id=text)
+        return tu.get_file_path()
 
     def post(self, *args, **kwargs):
         model = self.create_model()
